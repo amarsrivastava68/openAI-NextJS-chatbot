@@ -3,19 +3,20 @@ import { TbMessageChatbot } from "react-icons/tb";
 import { useState } from "react";
 import BotMessage from "./ui/bot-message";
 import UserMessage from "./ui/user-message";
+import ChatInput from "./ui/chat-input";
 export default function Chatbot() {
   const [showchat, setshowchat] = useState(false);
   return (
     <>
       <TbMessageChatbot
         size={64}
-        onClick={()=>setshowchat(!showchat)}
+        onClick={() => setshowchat(!showchat)}
         className="fixed right-[calc(2rem)] bottom-[calc(1rem)] hover:cursor-pointer"
       />
       {showchat && (
         <div className="fixed right-[calc(2rem)] border-t-2  rounded-lg hover:cursor-pointer p-5 shadow-sm shadow-black transition ease-out h-[474px] w-[300px] md:w-[500px] bottom-[calc(6rem)]">
           <div className="flex flex-col h-full">
-            <div className="border-b-2 border rounded-lg border-b-black  p-2">
+            <div className="border-b-2 border rounded-lg border-b-black shadow-black shadow-sm  p-2">
               <h1 className="text-orange-500 font-semibold">
                 Flowbite Assistant
               </h1>
@@ -24,12 +25,13 @@ export default function Chatbot() {
                 Ask your doubts and queries regarding our platform , get
                 personalized information{" "}
               </p>
-              
             </div>
-            <div className="p-2 flex flex-col flex-1 items-center  overflow-y-auto">Messages</div>
+            <div className="p-2 flex flex-col flex-1 items-center  overflow-y-auto">
+              <BotMessage />
+              <UserMessage />
+            </div>
             {/* chat input  */}
-            <BotMessage/>
-            <UserMessage/>
+            <ChatInput/>
           </div>
         </div>
       )}
