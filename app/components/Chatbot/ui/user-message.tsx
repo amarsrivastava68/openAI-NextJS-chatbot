@@ -9,7 +9,7 @@ export default function UserMessage({role, content}: Message) {
             </div>
 
             <div>
-                <div>{role}</div>
+                <div className='font-bold'>{role}</div>
                 <p>{content}</p>
             </div>
         </div>
