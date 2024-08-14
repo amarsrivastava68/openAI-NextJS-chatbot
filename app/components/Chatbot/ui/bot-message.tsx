@@ -1,18 +1,19 @@
-import React from 'react'
-import { RiRobot3Line } from 'react-icons/ri'
-import { Message } from '../chatbot'
-const BotMessage = ({role, content}:Message) => {
-  return (
-    <div className='flex items-start w-full my-2 '>
-      <div className='flex border bg-slate-100 mr-2 rounded-full  w-10 h-10 items-center justify-center'>
-        <RiRobot3Line size={20} />
-      </div>
-      <div className='flex flex-col'>
-        <p className='font-semibold'>{role}</p>
-        <p>{content}</p>
-      </div>
-    </div>
-  )
-}
+import {RiRobot3Line} from 'react-icons/ri';
+import { Message } from '../chatbot';
 
-export default BotMessage
+
+
+export default function BotMessage({role, content}: Message) {
+    return (
+        <div className='flex w-full my-2'>
+            <div className='flex justify-center p-1 w-8 h-8 border border-1 border-black  rounded-full mr-2'>
+                <RiRobot3Line size={18}/>
+            </div>
+
+            <div>
+                <div>{role}</div>
+                <p>{content}</p>
+            </div>
+        </div>
+    ) 
+}

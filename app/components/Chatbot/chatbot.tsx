@@ -76,12 +76,11 @@ export default function Chatbot() {
           <div className="flex flex-col h-full">
             <div className="border-b-2 border rounded-lg border-b-black shadow-black shadow-sm  p-2">
               <h1 className="text-orange-500 font-semibold">
-                Flowbite Assistant
+                Flowbite Shipping company Assistant
               </h1>
               <h3 className="text-sm font-semibold">Powered by OpenAI</h3>
               <p className="text-xs">
-                Ask your doubts and queries regarding our platform , get
-                personalized information{" "}
+                Ask your doubts and queries regarding our shipping platform , get specific information .{" "}
               </p>
             </div>
             <div className="p-2 flex flex-col flex-1 items-center  overflow-y-auto">
