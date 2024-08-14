@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import BotMessage from "./ui/bot-message";
 import UserMessage from "./ui/user-message";
 import ChatInput from "./ui/chat-input";
-import { log } from "console";
+import chatCompletion from '../../../actions/index'
 
 export type Message = {
   role: "user" | "assistant" | "system";
@@ -17,26 +17,53 @@ export default function Chatbot() {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
-      role: "assistant",
+      role: "assistant" as const,
       content: "hi ! ask me your queries about flowbite svelte .",
     },
   ]);
 
-  const handleSendMessage = async (e: FormEvent)=>{
-        e.preventDefault()
-          console.log('userMessage ' , userMessage);
-          if (!userMessage) return ;
-          
-          const newMessage : Message = {role :'user' , content: userMessage}
-          setMessages(prev => [...prev , newMessage ])
-          setUserMessage('')
-          setLoading(true)
-          try {
-            
-          } catch (error) {
-            
-          }
-  }
+  const handleSendMessage = async (e: FormEvent) => {
+    e.preventDefault();
+
+    console.log("USER MESSAGE", userMessage);
+
+    if (!userMessage) return;
+
+    // Create new message object
+    const newMessage: Message = { role: "user" as const, content: userMessage };
+    console.log("NEW MESSAGE", newMessage);
+
+    // Update the message state
+    setMessages((prevMessage) => [...prevMessage, newMessage]);
+    setLoading(true);
+
+    // Request to OPENAI
+    try {
+      // copy of messages
+      const chatMessages = messages.slice(1);
+      console.log("CHAT MESSAGES", chatMessages);
+
+      // Call the chat completion API
+      const res = await chatCompletion([...chatMessages, newMessage]);
+
+      console.log("RESPONSE", res);
+      // Handle response
+      if (res?.choices[0]?.message) {
+        setUserMessage("");
+
+        const assistantMessage: Message = {
+          content: res.choices[0].message.content as string,
+          role: "assistant",
+        };
+
+        setMessages(prevMessages => [...prevMessages, assistantMessage]);
+      }
+    } catch (error) {
+      console.log("API Error", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <>
       <TbMessageChatbot
